@@ -9,6 +9,9 @@
             <img src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->title }}" class="card-img" style="max-width: 340px;">
         </div>
     @endif
+    <div>
+        <strong>Tipo progetto</strong>: {{ $project->type ? $project->type->name : 'Nessun tipo' }}
+    </div>
 
     <div>
         <strong>Created at</strong>: {{ $project->created_at }}
@@ -20,6 +23,7 @@
         </div>
         {{ $project->summary }}
     </div>
+    
     <div class="my-5">
         <small><strong>Last update</strong>: {{ $project->updated_at }}</small>
     </div>

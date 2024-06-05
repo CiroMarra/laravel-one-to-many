@@ -33,7 +33,7 @@ class ProjectControl extends Controller
     {
         {
             $types = Type::all();
-            return view('admin.projects.create');
+            return view('admin.projects.create', compact('types'));
         }
     }
 
@@ -45,13 +45,14 @@ class ProjectControl extends Controller
      */
     public function store(Request $request)
     {
-    
-         $validated = $request->validate(
+            $request->validate(
              [
                  'name' => 'required|min:5|max:150|unique:projects,name',
                  'summary' => 'min:10|max:500',
                  'client_name' => 'min:3|max:250',
-                 'cover_image' => 'nullable|image|max:512'
+                 'cover_image' => 'nullable|image|max:512',
+                 'type_id' => 'exists:types,id'
+           
              ],
              [
                 'name.required' => 'devi dare un nome al progetto',
@@ -62,7 +63,8 @@ class ProjectControl extends Controller
                 'summary.max' => 'il summary del progetto deve avere una descrizione massima di 500 caratteri',
                 'client_name.min' => 'il nome del cliente deve avere un minimo di 3 caratteri',
                 'client_name.max' => 'il nome del cliente deve avere un massimo di 150 caratteri',
-                'cover_image' => "l' immagine caricata non deve superare il peso di 512kb "
+                'cover_image' => "l' immagine caricata non deve superare il peso di 512kb ",
+                'type_id' => 'il progetto deve avere una categoria'
              ]
          );
 
@@ -105,7 +107,9 @@ class ProjectControl extends Controller
      */
     public function edit(project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -127,7 +131,8 @@ class ProjectControl extends Controller
                     ],
                     'summary' => 'min:10|max:500',
                     'client_name' => 'min:3|max:250',
-                    'cover_image' => 'nullable|image|max:512'
+                    'cover_image' => 'nullable|image|max:512',
+                    'type_id' => 'exists:types,id'
                 ],
                 [
                    'name.required' => 'devi dare un nome al progetto',
@@ -138,7 +143,8 @@ class ProjectControl extends Controller
                    'summary.max' => 'il summary del progetto deve avere una descrizione massima di 500 caratteri',
                    'client_name.min' => 'il nome del cliente deve avere un minimo di 3 caratteri',
                    'client_name.max' => 'il nome del cliente deve avere un massimo di 150 caratteri',
-                   'cover_image' => "l' immagine caricata non deve superare il peso di 512kb "
+                   'cover_image' => "l' immagine caricata non deve superare il peso di 512kb ",
+                   'type_id' => 'il progetto deve avere una categoria'
                 ]
             );
 
