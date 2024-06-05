@@ -8,6 +8,7 @@ use App\Models\project;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Type;
 
 class ProjectControl extends Controller
 {
@@ -31,6 +32,7 @@ class ProjectControl extends Controller
     public function create()
     {
         {
+            $types = Type::all();
             return view('admin.projects.create');
         }
     }
